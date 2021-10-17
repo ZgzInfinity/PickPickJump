@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
@@ -21,7 +20,6 @@ public class Ball : MonoBehaviour
     {
         rigidBodyBall = GetComponent<Rigidbody>();
     }
-
 
     private void OnCollisionEnter(Collision collision)
     {
