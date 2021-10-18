@@ -15,6 +15,14 @@ public class Ball : MonoBehaviour
 
     private bool ignoreNextCollision = false;
 
+    private int perfectParts = 0;
+
+    public float superSpeed = 8f;
+
+    private bool isSuperSpeedEnabled = false;
+
+    private int perfectPassCount = 3;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +36,13 @@ public class Ball : MonoBehaviour
             ignoreNextCollision = true;
             rigidBodyBall.AddForce(Vector3.up * impulseForce, ForceMode.Impulse);
             secondsOfCollision = secondsPerCollision;
+
+            if (isSuperSpeedEnabled)
+            {
+                perfectParts = 0;
+                isSuperSpeedEnabled = false;
+                Destroy(collision.transform.parent.gameObject, 0.2f);
+            }
         }
     }
 
@@ -36,6 +51,12 @@ public class Ball : MonoBehaviour
         if (ignoreNextCollision)
         {
             AllowNextCollision();
+        }
+
+        if (!isSuperSpeedEnabled && perfectParts >= perfectPassCount)
+        {
+            isSuperSpeedEnabled = true;
+            rigidBodyBall.AddForce(Vector3.down * superSpeed, ForceMode.Impulse);
         }
     }
 
@@ -50,5 +71,10 @@ public class Ball : MonoBehaviour
         {
             ignoreNextCollision = false;
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        perfectParts++;
     }
 }
