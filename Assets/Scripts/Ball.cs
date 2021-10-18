@@ -43,6 +43,11 @@ public class Ball : MonoBehaviour
                 isSuperSpeedEnabled = false;
                 Destroy(collision.transform.parent.gameObject, 0.2f);
             }
+            
+            if (Splat.Instance != null)
+            {
+                Splat.Instance.MakeSplat();
+            }
         }
     }
 
