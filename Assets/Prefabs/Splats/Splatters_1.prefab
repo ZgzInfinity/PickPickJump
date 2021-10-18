@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1432900561119135652}
   - component: {fileID: 1432900561119135653}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Splatters_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 3058a36506963ee4cb4d9eeecebfd55f, type: 3}
-  m_Color: {r: 0.8301887, g: 0.4423661, b: 0.105731584, a: 1}
+  m_Color: {r: 0.07035423, g: 0.084033825, b: 0.8773585, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

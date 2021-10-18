@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3338657959840183582}
   - component: {fileID: 5106569206190155422}
   - component: {fileID: 2874749953196248382}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HelixPartPrefab (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 1707583222228002125}
   - component: {fileID: 1576290710057255395}
   - component: {fileID: 1758764354341390289}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HelixPartPrefab (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,7 +200,7 @@ GameObject:
   - component: {fileID: 6447801620432341336}
   - component: {fileID: 5492731987364340583}
   - component: {fileID: 663836053256550184}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HelixPartPrefab (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -294,7 +294,7 @@ GameObject:
   - component: {fileID: 2992741984208673273}
   - component: {fileID: 434138674636654159}
   - component: {fileID: 7480147616288810929}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HelixPartPrefab (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -388,7 +388,7 @@ GameObject:
   - component: {fileID: 1621265256068813538}
   - component: {fileID: 2993741165893307314}
   - component: {fileID: 9205124433260841969}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HelixPartPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -482,7 +482,7 @@ GameObject:
   - component: {fileID: 4419681032460142640}
   - component: {fileID: 3338073214894460777}
   - component: {fileID: 2531721277760501578}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HelixPartPrefab (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -574,9 +574,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3844687615414655074}
   - component: {fileID: 1945049118}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HelixLevel
-  m_TagString: Untagged
+  m_TagString: HelixLevel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -632,7 +632,7 @@ GameObject:
   - component: {fileID: 5548847555991743693}
   - component: {fileID: 8350226330796216911}
   - component: {fileID: 559730534209979141}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HelixPartPrefab (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -726,7 +726,7 @@ GameObject:
   - component: {fileID: 1579624177064338718}
   - component: {fileID: 7485162342733615789}
   - component: {fileID: 6267778815858385227}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HelixPartPrefab (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -820,7 +820,7 @@ GameObject:
   - component: {fileID: 2722172833628392703}
   - component: {fileID: 3933375769135918824}
   - component: {fileID: 1363922160196271404}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HelixPartPrefab (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -914,7 +914,7 @@ GameObject:
   - component: {fileID: 5991225987267965033}
   - component: {fileID: 8778661002135803486}
   - component: {fileID: 8096781793570151230}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HelixPartPrefab (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1008,7 +1008,7 @@ GameObject:
   - component: {fileID: 4893563577671523789}
   - component: {fileID: 1923719964490057818}
   - component: {fileID: 202951574528588291}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HelixPartPrefab (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1102,7 +1102,7 @@ GameObject:
   - component: {fileID: 6168363428826923718}
   - component: {fileID: 7121529908996150981}
   - component: {fileID: 431017122317373121}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HelixPartPrefab (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

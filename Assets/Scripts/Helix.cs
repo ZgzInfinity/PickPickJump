@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class Helix : MonoBehaviour
 {
-
     private Vector2 lastPosition;
 
     private Vector3 startRotation;
@@ -24,11 +23,18 @@ public class Helix : MonoBehaviour
 
     public Ball ball;
 
+    public int currentLevel;
+
     private void Awake()
     {
         startRotation = transform.localEulerAngles;
         helixDistance = helixTopTransform.localPosition.y - (helixGoalTransform.localPosition.y + 0.17f);
-        LoadStage(0);
+        currentLevel = 0;
+    }
+
+    private void Start()
+    {
+        LoadStage(currentLevel);
     }
 
     // Update is called once per frame
@@ -84,10 +90,11 @@ public class Helix : MonoBehaviour
 
             foreach (Transform transform in level.transform)
             {
-                transform.GetComponent<Renderer>().material.color = stage.stageLevelPartColor;
+                transform.GetComponent<Renderer>().material.color = stage.stageLevelPartNotDeathColor;
                 
                 if (transform.gameObject.activeInHierarchy)
                 {
+                    transform.gameObject.tag = GameTags.HelixLevel;
                     leftParts.Add(transform.gameObject);
                 }
             }
@@ -100,10 +107,20 @@ public class Helix : MonoBehaviour
 
                 if (!deathParts.Contains(randomPart))
                 {
-                    randomPart.gameObject.GetComponent<Renderer>().material.color = Color.red;
+                    randomPart.gameObject.AddComponent<DeathPart>();
+                    randomPart.gameObject.GetComponent<Renderer>().material.color = stage.stageLevelPartDeath;
                     deathParts.Add(randomPart);
                 }
             }
+        }
+    }
+
+    public void LoadNextStage()
+    {
+        if (currentLevel < allStages.Count)
+        {
+            currentLevel++;
+            LoadStage(currentLevel);
         }
     }
 }

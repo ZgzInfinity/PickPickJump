@@ -16,8 +16,10 @@ public class Level
 public class Stage : ScriptableObject
 {
     public Color stageBackgroundColor = Color.white;
-    public Color stageLevelPartColor = Color.white;
+    public Color stageLevelPartNotDeathColor = Color.white;
+    public Color stageLevelPartDeath = Color.white;
     public Color stageBallColor = Color.white;
 
     public List<Level> levels = new List<Level>();
+
 }

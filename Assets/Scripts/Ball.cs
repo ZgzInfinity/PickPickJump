@@ -2,7 +2,6 @@
 
 public class Ball : MonoBehaviour
 {
-
     public Rigidbody rigidBodyBall;
 
     public float impulseForce = 3f;
@@ -23,32 +22,51 @@ public class Ball : MonoBehaviour
 
     private int perfectPassCount = 3;
 
+    private Vector3 startingPosition;
+
     // Start is called before the first frame update
     void Start()
     {
         rigidBodyBall = GetComponent<Rigidbody>();
+        startingPosition = transform.position;
+    }
+
+    private void Reset()
+    {
+        transform.position = startingPosition;
+        perfectParts = 0;
+        isSuperSpeedEnabled = false;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (!ignoreNextCollision)
         {
+            perfectParts = 0;
             ignoreNextCollision = true;
             rigidBodyBall.AddForce(Vector3.up * impulseForce, ForceMode.Impulse);
             secondsOfCollision = secondsPerCollision;
 
-            if (isSuperSpeedEnabled)
+            if (collision.gameObject.CompareTag(GameTags.HelixLevel))
             {
-                perfectParts = 0;
-                isSuperSpeedEnabled = false;
-                Destroy(collision.transform.parent.gameObject, 0.2f);
+                if (collision.gameObject.GetComponent<DeathPart>())
+                {
+                    Reset();
+                    ScoreManager.Instance.resetScore();
+                }
+                else if (isSuperSpeedEnabled)
+                {
+                    isSuperSpeedEnabled = false;
+                    Destroy(collision.transform.parent.gameObject, 0.2f);
+                }
             }
-            
-            if (Splat.Instance != null)
+            else if (collision.gameObject.CompareTag(GameTags.HelixGoal))
             {
-                Splat.Instance.MakeSplat();
+                Reset();
+                GameLevelManager.Instance.LoadNextLevel();
             }
         }
+        Splat.Instance.MakeSplat();
     }
 
     private void Update()
@@ -80,6 +98,14 @@ public class Ball : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (perfectParts == 0)
+        {
+            ScoreManager.Instance.updateScore(5);
+        }
+        else
+        {
+            ScoreManager.Instance.updateScore(perfectParts * 5);
+        }
         perfectParts++;
     }
 }
