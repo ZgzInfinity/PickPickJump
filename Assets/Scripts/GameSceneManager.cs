@@ -12,12 +12,6 @@ public class GameSceneManager : MonoBehaviour
         Instance = this;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        ScoreManager.Instance.resetScore();
-    }
-
     public void ChangeScene(string sceneToLoad)
     {
         SceneManager.LoadScene(sceneToLoad);

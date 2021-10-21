@@ -7,6 +7,8 @@ TagManager:
   - HelixTop
   - HelixLevel
   - HelixGoal
+  - HelixLevelDeath
+  - HelixLevelNotDeath
   layers:
   - Default
   - TransparentFX

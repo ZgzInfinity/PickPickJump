@@ -8,13 +8,33 @@ public class GameLevelManager : MonoBehaviour
 
     public Helix helix;
 
+    public int currentLevel;
+
     private void Awake()
-    {
+    { 
         Instance = this;
+        currentLevel = 0;
     }
 
-    public void LoadNextLevel()
+    public void Start()
     {
-        helix.LoadNextStage();
+        LoadLevel();
+    }
+
+    public void LoadLevel()
+    {
+        helix.LoadLevel(currentLevel);
+    }
+
+    public bool IncrementLevel()
+    {
+        if (currentLevel < helix.GetNumLevels()){
+            currentLevel++;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

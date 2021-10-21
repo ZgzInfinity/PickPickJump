@@ -25,16 +25,17 @@ public class Helix : MonoBehaviour
 
     public int currentLevel;
 
+    public RectTransform musicButton;
+
+    public int GetNumLevels()
+    {
+        return allStages.Count;
+    }
+
     private void Awake()
     {
         startRotation = transform.localEulerAngles;
         helixDistance = helixTopTransform.localPosition.y - (helixGoalTransform.localPosition.y + 0.17f);
-        currentLevel = 0;
-    }
-
-    private void Start()
-    {
-        LoadStage(currentLevel);
     }
 
     // Update is called once per frame
@@ -47,11 +48,20 @@ public class Helix : MonoBehaviour
             lastPosition = currentTapPosition;
             transform.Rotate(Vector3.up * distance);
         }
+        UiManager.Instance.changeSliderLevelAndProgress();
+    }
+
+    public void Reset()
+    {
+        transform.localEulerAngles = startRotation;
+        UiManager.Instance.resetScore();
     }
 
     public void LoadStage(int stageNumber)
     {
+        Reset();
         Stage stage = allStages[Mathf.Clamp(stageNumber, 0, allStages.Count - 1)];
+        gameObject.GetComponent<Renderer>().material.color = stage.stageHelixCylinder;
 
         cameraLevel.backgroundColor = stage.stageBackgroundColor;
         ball.GetComponent<Renderer>().material.color = stage.stageBallColor;
@@ -94,7 +104,7 @@ public class Helix : MonoBehaviour
                 
                 if (transform.gameObject.activeInHierarchy)
                 {
-                    transform.gameObject.tag = GameTags.HelixLevel;
+                    transform.gameObject.tag = GameTags.HelixLevelNotDeath;
                     leftParts.Add(transform.gameObject);
                 }
             }
@@ -107,19 +117,18 @@ public class Helix : MonoBehaviour
 
                 if (!deathParts.Contains(randomPart))
                 {
-                    randomPart.gameObject.AddComponent<DeathPart>();
                     randomPart.gameObject.GetComponent<Renderer>().material.color = stage.stageLevelPartDeath;
+                    randomPart.gameObject.tag = GameTags.HelixLevelDeath;
                     deathParts.Add(randomPart);
                 }
             }
         }
     }
 
-    public void LoadNextStage()
+    public void LoadLevel(int currentLevel)
     {
         if (currentLevel < allStages.Count)
         {
-            currentLevel++;
             LoadStage(currentLevel);
         }
     }

@@ -19,6 +19,7 @@ public class Stage : ScriptableObject
     public Color stageLevelPartNotDeathColor = Color.white;
     public Color stageLevelPartDeath = Color.white;
     public Color stageBallColor = Color.white;
+    public Color stageHelixCylinder = Color.white;
 
     public List<Level> levels = new List<Level>();
 
