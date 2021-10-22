@@ -1880,8 +1880,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Art\r\nHelixModel by LuisCanary\n\r\nFont \r\nReliax\r by Raymond Larabie\nhttps://www.1001fonts.com\n\nSoundtracks\nAgua\nMachinist\nContact\nNew
-    Disc\nTechnician\nall composed by Maikas\n \nFx Sounds\r\n www.freesound.org"
+  m_text: "Art\r\nHelixModel by LuisCanary\n\r\nFont \r\nReliax\r by Raymond Larabie\nhttps://www.1001fonts.com\n\nSoundtracks\nAgua\nMachinist\nContact\nNewDisc\nTechnician\nall
+    composed by Maikas\n \nFx Sounds\r\n www.freesound.org"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7510f30edf9f9ef448ba711b34ce6f2d, type: 2}
   m_sharedMaterial: {fileID: -6053180178019826094, guid: 7510f30edf9f9ef448ba711b34ce6f2d,

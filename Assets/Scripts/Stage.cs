@@ -12,7 +12,7 @@ public class Level
     public int deathPartCount = 1;
 }
 
-[CreateAssetMenu(fileName = "New Stage")]
+[CreateAssetMenu(menuName = "HelixJump/Stage", fileName = "Stage.asset")]
 public class Stage : ScriptableObject
 {
     public Color stageBackgroundColor = Color.white;
