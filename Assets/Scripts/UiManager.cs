@@ -27,6 +27,8 @@ public class UiManager : MonoBehaviour
 
     public Transform ballTransform;
 
+    public RectTransform levelCompletedPanel;
+
     void Awake()
     {
         Instance = this;
@@ -39,6 +41,16 @@ public class UiManager : MonoBehaviour
         textBestScore.text = PlayerPrefs.GetInt("TopScore").ToString();
         currentLevel.text = (GameLevelManager.Instance.currentLevel + 1).ToString();
         nextLevel.text = (GameLevelManager.Instance.currentLevel + 2).ToString();
+    }
+
+    public void LevelCompleted()
+    {
+        levelCompletedPanel.gameObject.SetActive(true);
+    }
+
+    public void LevelUnCompleted()
+    {
+        levelCompletedPanel.gameObject.SetActive(false);
     }
 
     public void updateScore(int scorePoints)

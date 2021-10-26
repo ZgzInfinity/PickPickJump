@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 
 public class Helix : MonoBehaviour
@@ -43,10 +44,18 @@ public class Helix : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            Vector2 currentTapPosition = Input.mousePosition;
-            float distance = (lastPosition.x - currentTapPosition.x);
-            lastPosition = currentTapPosition;
-            transform.Rotate(Vector3.up * distance);
+            Vector2 mouseTapPosition = Input.mousePosition;
+            Vector2 localMousePosition = musicButton.InverseTransformPoint(mouseTapPosition);
+            if (musicButton.rect.Contains(localMousePosition))
+            {
+                AudioManager.Instance.ChangeCurrentSoundtrack();
+            }
+            else 
+            {
+                float distance = (lastPosition.x - mouseTapPosition.x);
+                lastPosition = mouseTapPosition;
+                transform.Rotate(Vector3.up * distance);
+            } 
         }
         UiManager.Instance.changeSliderLevelAndProgress();
     }
@@ -54,7 +63,7 @@ public class Helix : MonoBehaviour
     public void Reset()
     {
         transform.localEulerAngles = startRotation;
-        UiManager.Instance.resetScore();
+        UiManager.Instance.LevelUnCompleted();
     }
 
     public void LoadStage(int stageNumber)
@@ -123,6 +132,8 @@ public class Helix : MonoBehaviour
                 }
             }
         }
+        GameLevelManager.Instance.levelCompleted = false;
+        AudioManager.Instance.PlaySound(AudioManager.Instance.soundtracks[AudioManager.Instance.currentSoundtrack]);
     }
 
     public void LoadLevel(int currentLevel)

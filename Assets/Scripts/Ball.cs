@@ -26,24 +26,26 @@ public class Ball : MonoBehaviour
 
     public Helix helix;
 
+    public Sound bouncingBall;
+
+    public Sound gameOver;
+
+
     // Start is called before the first frame update
     void Start()
     {
         rigidBodyBall = GetComponent<Rigidbody>();
         startingPosition = transform.position;
         Trail.Instance.setTrailColor();
-        Splat.Instance.setSplatColor();
     }
 
-    private void Reset()
+    public void Reset()
     {
         transform.position = startingPosition;
         perfectParts = 0;
         isSuperSpeedEnabled = false;
         ignoreNextCollision = false;
         Trail.Instance.setTrailColor();
-        Splat.Instance.setSplatColor();
-        Splat.Instance.clearSplats();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -66,6 +68,9 @@ public class Ball : MonoBehaviour
                     }
                     else
                     {
+                        AudioManager.Instance.PlaySound(gameOver);
+                        AudioManager.Instance.storeMusicStatus();
+                        AudioManager.Instance.StopSound(AudioManager.Instance.soundtracks[AudioManager.Instance.currentSoundtrack]);
                         Reset();
                         helix.Reset();
                         UiManager.Instance.resetScore();
@@ -80,15 +85,13 @@ public class Ball : MonoBehaviour
             }
             else
             {
-                if (GameLevelManager.Instance.IncrementLevel())
-                {
-                    Reset();
-                    GameLevelManager.Instance.LoadLevel();
-                    UiManager.Instance.resetScore();
-                }
+                UiManager.Instance.LevelCompleted();
+                GameLevelManager.Instance.levelCompleted = true;
+                AudioManager.Instance.storeMusicStatus();
+                AudioManager.Instance.StopSound(AudioManager.Instance.soundtracks[AudioManager.Instance.currentSoundtrack]);
             }
+            AudioManager.Instance.PlaySound(bouncingBall);
         }
-        Splat.Instance.MakeSplat(collision.gameObject);
     }
 
     private void Update()

@@ -10,6 +10,10 @@ public class GameLevelManager : MonoBehaviour
 
     public int currentLevel;
 
+    public bool levelCompleted;
+
+    public Ball ball;
+
     private void Awake()
     { 
         Instance = this;
@@ -35,6 +39,21 @@ public class GameLevelManager : MonoBehaviour
         else
         {
             return false;
+        }
+    }
+
+    public void Update()
+    {
+        if (levelCompleted)
+        {
+            if (Input.GetMouseButton(0))
+            {
+                if (IncrementLevel())
+                {
+                    ball.Reset();
+                    LoadLevel();
+                }
+            }
         }
     }
 }
