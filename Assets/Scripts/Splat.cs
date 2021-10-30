@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-
 public class Splat : MonoBehaviour
 {
     public static Splat Instance;
@@ -27,7 +26,7 @@ public class Splat : MonoBehaviour
 
     private IEnumerator splatSetColorCoroutine()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.05f);
         splatPrefab.GetComponent<SpriteRenderer>().color = ball.GetComponent<Renderer>().material.color;
     }
 

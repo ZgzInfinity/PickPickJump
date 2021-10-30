@@ -23,7 +23,7 @@ public class Trail : MonoBehaviour
 
     private IEnumerator trailSetColorCoroutine()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
         Color ballColor = ball.GetComponent<Renderer>().material.color;
         trail.startColor = new Color(ballColor.r, ballColor.g, ballColor.b, 1f);
         trail.endColor = new Color(ballColor.r, ballColor.g, ballColor.b, 0f);

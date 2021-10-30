@@ -36,6 +36,16 @@ public class AudioManager : MonoBehaviour
         soundtrackChanged = false;
     }
 
+    private void Start()
+    {
+        if (GameSceneManager.Instance.GetSceneName() == "Intro" ||
+            GameSceneManager.Instance.GetSceneName() == "Options")
+        {
+            PlaySound(soundtracks[0], false);
+        }
+    }
+
+
     public void ChangeCurrentSoundtrack()
     {
         if (!soundtrackChanged)
@@ -43,8 +53,7 @@ public class AudioManager : MonoBehaviour
             soundtrackChanged = true;
             secondsToChangeSoundtrack = secondsPerSoundtrackChange;
             currentSoundtrack = (currentSoundtrack < soundtracks.Count - 1) ? currentSoundtrack + 1 : 0;
-            Debug.Log(currentSoundtrack);
-            PlaySound(soundtracks[currentSoundtrack]);
+            PlaySound(soundtracks[currentSoundtrack], true);
         }
     }
 
@@ -86,7 +95,7 @@ public class AudioManager : MonoBehaviour
     }
 
     // Play music
-    private void playMusic(Sound sound)
+    private void playMusic(Sound sound, bool musicStatus)
     {
         // Set the clip with the volume and the loop options
         musicAudioSource.clip = sound.clip;
@@ -94,7 +103,11 @@ public class AudioManager : MonoBehaviour
         musicAudioSource.loop = sound.loop;
 
         // Play the music
-        getMusicStatus();
+        if (musicStatus)
+        {
+            getMusicStatus();
+        }
+
         musicAudioSource.Play();
     }
 
@@ -110,13 +123,13 @@ public class AudioManager : MonoBehaviour
     }
 
     // Reproduce a sound of the game
-    public void PlaySound(Sound sound)
+    public void PlaySound(Sound sound, bool musicStatus)
     {
         // Check if the sound is a music or an effect
         if (sound.soundType == Sound.SoundType.MUSIC)
         {
             // Music
-            playMusic(sound);
+            playMusic(sound, musicStatus);
         }
         else if (sound.soundType == Sound.SoundType.FX)
         {

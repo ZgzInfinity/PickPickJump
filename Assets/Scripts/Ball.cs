@@ -6,12 +6,6 @@ public class Ball : MonoBehaviour
 
     public float impulseForce = 3f;
 
-    private float secondsPerCollision = 0.2f;
-
-    private float secondsOfCollision = 0f;
-
-    private float decreaseFactor = 0.2f;
-
     private bool ignoreNextCollision = false;
 
     private int perfectParts = 0;
@@ -30,75 +24,33 @@ public class Ball : MonoBehaviour
 
     public Sound gameOver;
 
+    private bool inGameOver;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         rigidBodyBall = GetComponent<Rigidbody>();
         startingPosition = transform.position;
-        Trail.Instance.setTrailColor();
+        inGameOver = false;
     }
 
     public void Reset()
     {
+        inGameOver = false;
         transform.position = startingPosition;
         perfectParts = 0;
         isSuperSpeedEnabled = false;
         ignoreNextCollision = false;
         Trail.Instance.setTrailColor();
+        Splat.Instance.setSplatColor();
+        Splat.Instance.clearSplats();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!ignoreNextCollision)
+        if (ignoreNextCollision || inGameOver)
         {
-            if (!collision.gameObject.CompareTag(GameTags.HelixGoal))
-            {
-                perfectParts = 0;
-                ignoreNextCollision = true;
-                rigidBodyBall.AddForce(Vector3.up * impulseForce, ForceMode.Impulse);
-                secondsOfCollision = secondsPerCollision;
-
-                if (collision.gameObject.CompareTag(GameTags.HelixLevelDeath))
-                {
-                    if (isSuperSpeedEnabled)
-                    {
-                        isSuperSpeedEnabled = false;
-                        Destroy(collision.transform.parent.gameObject, 0.2f);
-                    }
-                    else
-                    {
-                        AudioManager.Instance.PlaySound(gameOver);
-                        AudioManager.Instance.storeMusicStatus();
-                        AudioManager.Instance.StopSound(AudioManager.Instance.soundtracks[AudioManager.Instance.currentSoundtrack]);
-                        Reset();
-                        helix.Reset();
-                        UiManager.Instance.resetScore();
-                        GameLevelManager.Instance.LoadLevel();
-                    }
-                }
-                else if (isSuperSpeedEnabled)
-                {
-                    isSuperSpeedEnabled = false;
-                    Destroy(collision.transform.parent.gameObject, 0.2f);
-                }
-            }
-            else
-            {
-                UiManager.Instance.LevelCompleted();
-                GameLevelManager.Instance.levelCompleted = true;
-                AudioManager.Instance.storeMusicStatus();
-                AudioManager.Instance.StopSound(AudioManager.Instance.soundtracks[AudioManager.Instance.currentSoundtrack]);
-            }
-            AudioManager.Instance.PlaySound(bouncingBall);
-        }
-    }
-
-    private void Update()
-    {
-        if (ignoreNextCollision)
-        {
-            AllowNextCollision();
+            return;
         }
 
         if (!isSuperSpeedEnabled && perfectParts >= perfectPassCount)
@@ -106,19 +58,63 @@ public class Ball : MonoBehaviour
             isSuperSpeedEnabled = true;
             rigidBodyBall.AddForce(Vector3.down * superSpeed, ForceMode.Impulse);
         }
-    }
 
-
-    private void AllowNextCollision()
-    {
-        if (secondsOfCollision > 0f)
+        if (!collision.gameObject.CompareTag(GameTags.HelixGoal))
         {
-            secondsOfCollision -= Time.deltaTime * decreaseFactor;
+            if (collision.gameObject.CompareTag(GameTags.HelixLevelDeath))
+            {
+                if (isSuperSpeedEnabled)
+                {
+                    perfectParts = 0;
+                    rigidBodyBall.velocity = Vector3.zero;
+                    rigidBodyBall.AddForce(Vector3.up * impulseForce, ForceMode.Impulse);
+
+                    isSuperSpeedEnabled = false;
+                    Destroy(collision.transform.parent.gameObject, 0.2f);
+                    AudioManager.Instance.PlaySound(bouncingBall, false);
+                }
+                else
+                {
+                    inGameOver = true;
+                    AudioManager.Instance.storeMusicStatus();
+                    AudioManager.Instance.StopSound(AudioManager.Instance.soundtracks[AudioManager.Instance.currentSoundtrack]);
+                    AudioManager.Instance.PlaySound(gameOver, false);
+                    UiManager.Instance.LevelGameOver();
+                    Splat.Instance.MakeSplat(collision.gameObject);
+                }
+            }
+            else if (isSuperSpeedEnabled)
+            {
+                perfectParts = 0;
+                rigidBodyBall.velocity = Vector3.zero;
+                rigidBodyBall.AddForce(Vector3.up * impulseForce, ForceMode.Impulse);
+                isSuperSpeedEnabled = false;
+                Destroy(collision.transform.parent.gameObject, 0.2f);
+            }
+            else
+            {
+                perfectParts = 0;
+                rigidBodyBall.velocity = Vector3.zero;
+                rigidBodyBall.AddForce(Vector3.up * impulseForce, ForceMode.Impulse);
+                AudioManager.Instance.PlaySound(bouncingBall, false);
+                Splat.Instance.MakeSplat(collision.gameObject);
+            }
+            ignoreNextCollision = true;
+            Invoke("AllowNextCollision", 0.2f);
         }
         else
         {
-            ignoreNextCollision = false;
+            Splat.Instance.MakeSplat(collision.gameObject);
+            UiManager.Instance.LevelCompleted();
+            GameLevelManager.Instance.levelCompleted = true;
+            AudioManager.Instance.storeMusicStatus();
+            AudioManager.Instance.StopSound(AudioManager.Instance.soundtracks[AudioManager.Instance.currentSoundtrack]);
         }
+    }
+
+    private void AllowNextCollision()
+    {
+        ignoreNextCollision = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -132,5 +128,15 @@ public class Ball : MonoBehaviour
             UiManager.Instance.updateScore(perfectParts * 5);
         }
         perfectParts++;
+    }
+
+
+    private void Update()
+    {
+        if (!isSuperSpeedEnabled && perfectParts >= perfectPassCount)
+        {
+            isSuperSpeedEnabled = true;
+            rigidBodyBall.AddForce(Vector3.down * superSpeed, ForceMode.Impulse);
+        }
     }
 }

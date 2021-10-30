@@ -64,6 +64,7 @@ public class Helix : MonoBehaviour
     {
         transform.localEulerAngles = startRotation;
         UiManager.Instance.LevelUnCompleted();
+        UiManager.Instance.LevelNotGameOver();
     }
 
     public void LoadStage(int stageNumber)
@@ -133,11 +134,16 @@ public class Helix : MonoBehaviour
             }
         }
         GameLevelManager.Instance.levelCompleted = false;
-        AudioManager.Instance.PlaySound(AudioManager.Instance.soundtracks[AudioManager.Instance.currentSoundtrack]);
+        AudioManager.Instance.PlaySound(AudioManager.Instance.soundtracks[AudioManager.Instance.currentSoundtrack], true);
     }
 
     public void LoadLevel(int currentLevel)
     {
+        Reset();
+        ball.Reset();
+
+        UiManager.Instance.resetScore();
+
         if (currentLevel < allStages.Count)
         {
             LoadStage(currentLevel);

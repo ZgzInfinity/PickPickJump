@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class GameLevelManager : MonoBehaviour
@@ -52,6 +53,10 @@ public class GameLevelManager : MonoBehaviour
                 {
                     ball.Reset();
                     LoadLevel();
+                }
+                else
+                {
+                    GameSceneManager.Instance.ChangeScene("Intro");
                 }
             }
         }

@@ -29,6 +29,8 @@ public class UiManager : MonoBehaviour
 
     public RectTransform levelCompletedPanel;
 
+    public RectTransform levelGameOverPanel;
+
     void Awake()
     {
         Instance = this;
@@ -51,6 +53,16 @@ public class UiManager : MonoBehaviour
     public void LevelUnCompleted()
     {
         levelCompletedPanel.gameObject.SetActive(false);
+    }
+
+    public void LevelGameOver()
+    {
+        levelGameOverPanel.gameObject.SetActive(true);
+    }
+
+    public void LevelNotGameOver()
+    {
+        levelGameOverPanel.gameObject.SetActive(false);
     }
 
     public void updateScore(int scorePoints)
