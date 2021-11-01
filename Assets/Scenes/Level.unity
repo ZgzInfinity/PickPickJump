@@ -1307,8 +1307,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   helix: {fileID: 1814783387}
-  currentLevel: 0
-  levelCompleted: 0
   ball: {fileID: 1227433282}
 --- !u!1001 &852911818
 PrefabInstance:
@@ -3369,19 +3367,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9325240100e5a4b48baf6bc32341bfd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnedLevels: []
   helixTopTransform: {fileID: 1945049117}
   helixGoalTransform: {fileID: 1877485968}
   helixLevelPrefab: {fileID: 3844687615414655075, guid: 3536ad374ce98c243a9a9ec14aa30667,
     type: 3}
-  allStages:
+  stages:
   - {fileID: 11400000, guid: 95fc2db198e33c844808f0e5123a63e8, type: 2}
   - {fileID: 11400000, guid: cc9bfc68601f331428999befc374de14, type: 2}
   - {fileID: 11400000, guid: 97db16b1f517c5b40a7077216fe0fa8c, type: 2}
   - {fileID: 11400000, guid: d2ea5a76ec1c33f49987a8904be2552d, type: 2}
   - {fileID: 11400000, guid: 6df7405394fd19d48afb43e2082b2a73, type: 2}
   - {fileID: 11400000, guid: e15ed0b254d097b40ac6761ff0db43ab, type: 2}
-  helixDistance: 0
-  spawnedLevels: []
   cameraLevel: {fileID: 963194227}
   ball: {fileID: 1227433282}
   currentLevel: 0

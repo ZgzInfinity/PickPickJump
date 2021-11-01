@@ -40,9 +40,12 @@ public class UiManager : MonoBehaviour
     {
         score = 0;
         textScore.text = score.ToString();
+
+        int level = GameLevelManager.Instance.GetCurrentLevel();
+
         textBestScore.text = PlayerPrefs.GetInt("TopScore").ToString();
-        currentLevel.text = (GameLevelManager.Instance.currentLevel + 1).ToString();
-        nextLevel.text = (GameLevelManager.Instance.currentLevel + 2).ToString();
+        currentLevel.text = (level + 1).ToString();
+        nextLevel.text = (level + 2).ToString();
     }
 
     public void LevelCompleted()
@@ -88,8 +91,10 @@ public class UiManager : MonoBehaviour
 
     public void changeSliderLevelAndProgress()
     {
-        currentLevel.text = (GameLevelManager.Instance.currentLevel + 1).ToString();
-        nextLevel.text = (GameLevelManager.Instance.currentLevel + 2).ToString();
+        int level = GameLevelManager.Instance.GetCurrentLevel();
+
+        currentLevel.text = (level + 1).ToString();
+        nextLevel.text = (level + 2).ToString();
 
         float totalDistance = (helixTopTransform.position.y - helixGoalTransform.position.y);
         float distanceLeft = totalDistance - (ballTransform.position.y - helixGoalTransform.position.y);

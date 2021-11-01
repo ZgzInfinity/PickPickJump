@@ -41,9 +41,9 @@ public class Ball : MonoBehaviour
         perfectParts = 0;
         isSuperSpeedEnabled = false;
         ignoreNextCollision = false;
-        Trail.Instance.setTrailColor();
-        Splat.Instance.setSplatColor();
-        Splat.Instance.clearSplats();
+        Trail.Instance.SetTrailColor();
+        Splat.Instance.SetSplatColor();
+        Splat.Instance.ClearSplats();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -76,8 +76,7 @@ public class Ball : MonoBehaviour
                 else
                 {
                     inGameOver = true;
-                    AudioManager.Instance.storeMusicStatus();
-                    AudioManager.Instance.StopSound(AudioManager.Instance.soundtracks[AudioManager.Instance.currentSoundtrack]);
+                    AudioManager.Instance.StopSound(AudioManager.Instance.soundtracks[AudioManager.Instance.currentSoundtrack], true);
                     AudioManager.Instance.PlaySound(gameOver, false);
                     UiManager.Instance.LevelGameOver();
                     Splat.Instance.MakeSplat(collision.gameObject);
@@ -106,9 +105,8 @@ public class Ball : MonoBehaviour
         {
             Splat.Instance.MakeSplat(collision.gameObject);
             UiManager.Instance.LevelCompleted();
-            GameLevelManager.Instance.levelCompleted = true;
-            AudioManager.Instance.storeMusicStatus();
-            AudioManager.Instance.StopSound(AudioManager.Instance.soundtracks[AudioManager.Instance.currentSoundtrack]);
+            GameLevelManager.Instance.SetLevelCompleted(true);
+            AudioManager.Instance.StopSound(AudioManager.Instance.soundtracks[AudioManager.Instance.currentSoundtrack], true);
         }
     }
 

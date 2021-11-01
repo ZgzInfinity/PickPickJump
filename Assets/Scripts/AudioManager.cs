@@ -1,4 +1,14 @@
-﻿using UnityEngine;
+﻿
+/*
+ * ------------------------------------------
+ * -- Project: Helix Jump -------------------
+ * -- Author: Rubén Rodríguez Estebban ------
+ * -- Date: 31/10/2021 ----------------------
+ * ------------------------------------------
+ */
+
+using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 /**
@@ -7,7 +17,13 @@ using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour
 {
-    // Static instance of the class
+    // Control if the soundtrack has been changed
+    private bool soundtrackChanged;
+
+    // Index of the current soundtrack
+    public int currentSoundtrack;
+
+    // Static instance
     public static AudioManager Instance;
 
     // Reference to the music reproductor
@@ -16,130 +32,52 @@ public class AudioManager : MonoBehaviour
     // Reference to the effects reproductor
     public AudioSource effectsAudioSource;
 
+    // List with the soundtracks played during the level
     public List<Sound> soundtracks = new List<Sound>();
 
-    public int currentSoundtrack;
-
-    private bool soundtrackChanged;
-
-    private float decreaseFactor = 0.5f;
-
-    private float secondsToChangeSoundtrack = 0f;
-
-    private float secondsPerSoundtrackChange = 1f;
-
-    // Constructor
+    // Awake is called one time when the scene is loaded
     private void Awake()
     {
+        // Initialization
         Instance = this;
+    }
+
+    // Start is called before the first frame update
+    private void Start()
+    {
+        // Set the current soundtrack to zero and lets the player to change it by default
         currentSoundtrack = 0;
+        soundtrackChanged = false;
+
+        // Get the current scene name
+        string currentSceneName = GameSceneManager.Instance.GetSceneName();
+
+        // Check if the soundtrack has to be played automatically 
+        if (currentSceneName == GameScenes.Intro || currentSceneName == GameScenes.Options)
+        {
+            // Reproduce the soundtrack from the beginnig
+            PlaySound(soundtracks[currentSoundtrack], false);
+        }
+    }
+
+    // Coroutine that lets the player to change the current soundtrack
+    private void AllowNextChangeSoundtrack()
+    {
+        // Start coroutine to let the player to change the soundtrack
+        StartCoroutine(AllowNextChangeSoundtrackCoroutine());
+    }
+
+    // Coroutine that lets the player to change the current soundtrack
+    private IEnumerator AllowNextChangeSoundtrackCoroutine()
+    {
+        // Wait two seconds to let the player change the current soundtrack
+        yield return new WaitForSeconds(2f);
+        // Make the changing soundtrack option available
         soundtrackChanged = false;
     }
 
-    private void Start()
-    {
-        if (GameSceneManager.Instance.GetSceneName() == "Intro" ||
-            GameSceneManager.Instance.GetSceneName() == "Options")
-        {
-            PlaySound(soundtracks[0], false);
-        }
-    }
-
-
-    public void ChangeCurrentSoundtrack()
-    {
-        if (!soundtrackChanged)
-        {
-            soundtrackChanged = true;
-            secondsToChangeSoundtrack = secondsPerSoundtrackChange;
-            currentSoundtrack = (currentSoundtrack < soundtracks.Count - 1) ? currentSoundtrack + 1 : 0;
-            PlaySound(soundtracks[currentSoundtrack], true);
-        }
-    }
-
-    // Reproduce a sound of the game
-    public void StopSound(Sound sound)
-    {
-        // Check if the sound is a music or an effect
-        if (sound.soundType == Sound.SoundType.MUSIC)
-        {
-            // Music
-            StopMusic(sound);
-        }
-        else if (sound.soundType == Sound.SoundType.FX)
-        {
-            // Effect
-            StopFx(sound);
-        }
-    }
-
-
-    private void Update()
-    {
-        if (soundtrackChanged)
-        {
-            AllowNextChangeSoundtrack();
-        }
-    }
-
-    private void AllowNextChangeSoundtrack()
-    {
-        if (secondsToChangeSoundtrack > 0f)
-        {
-            secondsToChangeSoundtrack -= Time.deltaTime * decreaseFactor;
-        }
-        else
-        {
-            soundtrackChanged = false;
-        }
-    }
-
-    // Play music
-    private void playMusic(Sound sound, bool musicStatus)
-    {
-        // Set the clip with the volume and the loop options
-        musicAudioSource.clip = sound.clip;
-        musicAudioSource.volume = sound.volume;
-        musicAudioSource.loop = sound.loop;
-
-        // Play the music
-        if (musicStatus)
-        {
-            getMusicStatus();
-        }
-
-        musicAudioSource.Play();
-    }
-
-    // Play music
-    private void StopMusic(Sound sound)
-    {
-        musicAudioSource.Stop();
-    }
-
-    private void StopFx(Sound sound)
-    {
-        effectsAudioSource.Stop();
-    }
-
-    // Reproduce a sound of the game
-    public void PlaySound(Sound sound, bool musicStatus)
-    {
-        // Check if the sound is a music or an effect
-        if (sound.soundType == Sound.SoundType.MUSIC)
-        {
-            // Music
-            playMusic(sound, musicStatus);
-        }
-        else if (sound.soundType == Sound.SoundType.FX)
-        {
-            // Effect
-            playFx(sound);
-        }
-    }
-
     // Play effect
-    private void playFx(Sound sound)
+    private void PlayFx(Sound sound)
     {
         // Set the clip with the volume and the loop options
         effectsAudioSource.clip = sound.clip;
@@ -150,13 +88,106 @@ public class AudioManager : MonoBehaviour
         effectsAudioSource.Play();
     }
 
-    public void storeMusicStatus()
+    // Play soundtrack
+    private void PlaySoundtrack(Sound sound, bool musicStatus)
     {
-         PlayerPrefs.SetFloat("MusicTime", musicAudioSource.time);
+        // Set the clip with the volume and the loop options
+        musicAudioSource.clip = sound.clip;
+        musicAudioSource.volume = sound.volume;
+        musicAudioSource.loop = sound.loop;
+
+        // Play the music reanudating from the previous status
+        if (musicStatus)
+        {
+            // Get the status
+            GetSoundtrackStatus();
+        }
+        // Play the soundtrack
+        musicAudioSource.Play();
     }
 
-    public void getMusicStatus()
+
+    // Stop soundtrack
+    private void StopSoundtrack(Sound sound, bool musicStatus)
     {
+        // Check if the status of the soundtrack must be stored
+        if (musicStatus)
+        {
+            StoreSoundtrackStatus();
+        }
+
+        // Stop the current soundtrack
+        musicAudioSource.Stop();
+    }
+
+    // Stop Fx
+    private void StopFx(Sound sound)
+    {
+        // Stop the current Fx
+        effectsAudioSource.Stop();
+    }
+
+    // Set the soundtrack status to be continued in the same point
+    private void StoreSoundtrackStatus()
+    {
+        // Store the duration point of the soundtrack
+        PlayerPrefs.SetFloat("MusicTime", musicAudioSource.time);
+    }
+
+    // Get the soundtrack status to be continued in the same point
+    private void GetSoundtrackStatus()
+    {
+        // Establish the duration point of the soundtrack
         musicAudioSource.time = PlayerPrefs.GetFloat("MusicTime");
+    }
+
+    // Controls if the soundtrack can be changed
+    public void ChangeCurrentSoundtrack()
+    {
+        // Check if the soundtrack can be changed by the player
+        if (!soundtrackChanged)
+        {
+            // Change the soundtrack to the next one
+            soundtrackChanged = true;
+            currentSoundtrack = (currentSoundtrack < soundtracks.Count - 1) ? currentSoundtrack + 1 : 0;
+
+            // Play the soundtrack from the beginning because it's a new one
+            PlaySound(soundtracks[currentSoundtrack], false);
+
+            // Let the player to change the soundtrack after two seconds
+            AllowNextChangeSoundtrack();
+        }
+    }
+
+    // Reproduce a sound of the game
+    public void StopSound(Sound sound, bool musicStatus)
+    {
+        // Check if the sound is a music or an effect
+        if (sound.soundType == Sound.SoundType.MUSIC)
+        {
+            // Soundtrack
+            StopSoundtrack(sound, musicStatus);
+        }
+        else if (sound.soundType == Sound.SoundType.FX)
+        {
+            // Effect
+            StopFx(sound);
+        }
+    }
+
+    // Reproduce a sound of the game
+    public void PlaySound(Sound sound, bool musicStatus)
+    {
+        // Check if the sound is a music or an effect
+        if (sound.soundType == Sound.SoundType.MUSIC)
+        {
+            // Soundtrack
+            PlaySoundtrack(sound, musicStatus);
+        }
+        else if (sound.soundType == Sound.SoundType.FX)
+        {
+            // Effect
+            PlayFx(sound);
+        }
     }
 }

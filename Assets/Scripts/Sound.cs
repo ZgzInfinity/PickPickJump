@@ -1,4 +1,13 @@
-﻿using UnityEngine;
+﻿
+/*
+ * ------------------------------------------
+ * -- Project: Helix Jump -------------------
+ * -- Author: Rubén Rodríguez Estebban ------
+ * -- Date: 31/10/2021 ----------------------
+ * ------------------------------------------
+ */
+
+using UnityEngine;
 
 /**
  * Script that controls the representation of the audio like a scriptable object
