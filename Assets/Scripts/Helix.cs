@@ -105,7 +105,7 @@ public class Helix : MonoBehaviour
             }
         }
         // Calculate the progress of the ball in the level
-        UiManager.Instance.changeSliderLevelAndProgress();
+        UiManager.Instance.ChangeSliderLevelAndProgress();
     }
 
     // Reset the helix configuration

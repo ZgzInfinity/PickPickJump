@@ -46,6 +46,9 @@ public class GameLevelManager : MonoBehaviour
         // Set the initial level and loads it
         currentLevel = 0;
         LoadLevel();
+
+        // Set the score to zero
+        UiManager.Instance.ResetScore();
     }
 
     // Get the current level
@@ -63,6 +66,13 @@ public class GameLevelManager : MonoBehaviour
     // Load the current level
     public void LoadLevel()
     {
+        // Check if the ball is in game over
+        if (ball.GetInGameOver())
+        {
+            // Set the score to zero
+            UiManager.Instance.ResetScore();
+        }
+
         // Load the level
         helix.LoadLevel(currentLevel);
     }

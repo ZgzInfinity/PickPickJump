@@ -46,6 +46,11 @@ public class Ball : MonoBehaviour
         Splat.Instance.ClearSplats();
     }
 
+    public bool GetInGameOver()
+    {
+        return inGameOver;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (ignoreNextCollision || inGameOver)
@@ -119,11 +124,11 @@ public class Ball : MonoBehaviour
     {
         if (perfectParts == 0)
         {
-            UiManager.Instance.updateScore(5);
+            UiManager.Instance.UpdateScore(5);
         }
         else
         {
-            UiManager.Instance.updateScore(perfectParts * 5);
+            UiManager.Instance.UpdateScore(perfectParts * 5);
         }
         perfectParts++;
     }
