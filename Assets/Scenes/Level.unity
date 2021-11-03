@@ -366,8 +366,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4283124716
-  m_fontColor: {r: 0.9254902, g: 0.29411766, b: 0.29411766, a: 1}
+    rgba: 4278255443
+  m_fontColor: {r: 0.3254902, g: 1, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -839,8 +839,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 696374ba24a14ce4fa4340b748c6d434, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  score: 0
-  bestScore: 0
   textScore: {fileID: 151005900}
   textBestScore: {fileID: 861493826}
   slider: {fileID: 1569690193}
@@ -1165,7 +1163,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 0.5
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -1529,8 +1527,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4279488321
-  m_fontColor: {r: 0.25490198, g: 0.8117647, b: 0.07450981, a: 1}
+    rgba: 4278255443
+  m_fontColor: {r: 0.3254902, g: 1, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2110,11 +2108,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidBodyBall: {fileID: 0}
-  impulseForce: 5.5
-  superSpeed: 10
   helix: {fileID: 1814783387}
   bouncingBall: {fileID: 11400000, guid: e61b5688e63233346ab069a6e83e4b88, type: 2}
   gameOver: {fileID: 11400000, guid: b3a451c8b7eae4b4285009e24e3fc00d, type: 2}
+  victory: {fileID: 11400000, guid: f2286b0adac6fab4da1ece091496c66e, type: 2}
 --- !u!1 &1279684357
 GameObject:
   m_ObjectHideFlags: 0
@@ -2361,8 +2358,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4279488321
-  m_fontColor: {r: 0.2532619, g: 0.8113208, b: 0.07271269, a: 1}
+    rgba: 4278255443
+  m_fontColor: {r: 0.3254902, g: 1, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2495,8 +2492,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4283124716
-  m_fontColor: {r: 0.9254902, g: 0.29411766, b: 0.29411766, a: 1}
+    rgba: 4278255443
+  m_fontColor: {r: 0.32685208, g: 1, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3367,7 +3364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9325240100e5a4b48baf6bc32341bfd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnedLevels: []
+  spawnedHelixPlatforms: []
   helixTopTransform: {fileID: 1945049117}
   helixGoalTransform: {fileID: 1877485968}
   helixLevelPrefab: {fileID: 3844687615414655075, guid: 3536ad374ce98c243a9a9ec14aa30667,

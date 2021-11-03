@@ -141,6 +141,11 @@ public class AudioManager : MonoBehaviour
         musicAudioSource.time = PlayerPrefs.GetFloat("MusicTime");
     }
 
+    public Sound GetCurrentSoundtrack()
+    {
+        return soundtracks[currentSoundtrack];
+    }
+
     // Controls if the soundtrack can be changed
     public void ChangeCurrentSoundtrack()
     {

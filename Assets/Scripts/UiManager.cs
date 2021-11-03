@@ -64,6 +64,25 @@ public class UiManager : MonoBehaviour
         Instance = this;
     }
 
+    // Add new score
+    private void AddScore(int scorePoints)
+    {
+        // Add the score
+        score += scorePoints;
+    }
+
+    // Update the best score of the game
+    private void UpdateBestScore()
+    {
+        // Check if the best score has been improved
+        if (score > PlayerPrefs.GetInt("TopScore"))
+        {
+            // Set the best score value with the new best score
+            PlayerPrefs.SetInt("TopScore", score);
+            textBestScore.text = score.ToString();
+        }
+    }
+
     // Reset the score to zero and updates the current and next level indicators
     public void ResetScore()
     {
@@ -117,25 +136,6 @@ public class UiManager : MonoBehaviour
         AddScore(scorePoints);
         textScore.text = score.ToString();
         UpdateBestScore();
-    }
-
-    // Add new score
-    private void AddScore(int scorePoints)
-    {
-        // Add the score
-        score += scorePoints;
-    }
-
-    // Update the best score of the game
-    private void UpdateBestScore()
-    {
-        // Check if the best score has been improved
-        if (score > PlayerPrefs.GetInt("TopScore"))
-        {
-            // Set the best score value with the new best score
-            PlayerPrefs.SetInt("TopScore", score);
-            textBestScore.text = score.ToString();
-        }
     }
 
     // Set the slider levels of the game

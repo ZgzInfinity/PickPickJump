@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c4b1fce29e9ef944afc01639a06803d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonSound: {fileID: 11400000, guid: 101c6a3f7a06c074680089398fd3d37f, type: 2}
 --- !u!4 &358223923
 Transform:
   m_ObjectHideFlags: 0
@@ -361,8 +362,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1086164650}
   - {fileID: 1466539695}
+  - {fileID: 1086164650}
   m_Father: {fileID: 413286835}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -933,7 +934,7 @@ PrefabInstance:
     - target: {fileID: 4703882758386518616, guid: 336fff921ce25994fbdc9327a43d8a02,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: loadCreditsPanel
+      value: LoadCreditsPanel
       objectReference: {fileID: 0}
     - target: {fileID: 4703882758386518622, guid: 336fff921ce25994fbdc9327a43d8a02,
         type: 3}
@@ -1088,7 +1089,7 @@ PrefabInstance:
     - target: {fileID: 4703882758386518616, guid: 336fff921ce25994fbdc9327a43d8a02,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChangeScene
+      value: ChangeSceneAfterButtonSound
       objectReference: {fileID: 0}
     - target: {fileID: 4703882758386518616, guid: 336fff921ce25994fbdc9327a43d8a02,
         type: 3}
@@ -1248,12 +1249,12 @@ PrefabInstance:
     - target: {fileID: 4703882758386518616, guid: 336fff921ce25994fbdc9327a43d8a02,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: loadOptionsPanel
+      value: LoadOptionsPanel
       objectReference: {fileID: 0}
     - target: {fileID: 4703882758386518622, guid: 336fff921ce25994fbdc9327a43d8a02,
         type: 3}
       propertyPath: m_Name
-      value: Button
+      value: Button_Back_Menu
       objectReference: {fileID: 0}
     - target: {fileID: 4703882758386518623, guid: 336fff921ce25994fbdc9327a43d8a02,
         type: 3}
@@ -1532,7 +1533,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 471096331}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2021,6 +2022,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f762a4539cb520441b55ea9fe674ec48, type: 3}
+--- !u!114 &1784747875 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2924757515626848346, guid: f762a4539cb520441b55ea9fe674ec48,
+    type: 3}
+  m_PrefabInstance: {fileID: 1784747874}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a60aa02f1bfad24eb076f1c837c32ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1785594761
 GameObject:
   m_ObjectHideFlags: 0
@@ -2387,18 +2400,58 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4703882758386518616, guid: 336fff921ce25994fbdc9327a43d8a02,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4703882758386518616, guid: 336fff921ce25994fbdc9327a43d8a02,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4703882758386518616, guid: 336fff921ce25994fbdc9327a43d8a02,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4703882758386518616, guid: 336fff921ce25994fbdc9327a43d8a02,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 1784747875}
+    - target: {fileID: 4703882758386518616, guid: 336fff921ce25994fbdc9327a43d8a02,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
       objectReference: {fileID: 2020112037}
     - target: {fileID: 4703882758386518616, guid: 336fff921ce25994fbdc9327a43d8a02,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4703882758386518616, guid: 336fff921ce25994fbdc9327a43d8a02,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeCurrentSoundtrack
+      objectReference: {fileID: 0}
+    - target: {fileID: 4703882758386518616, guid: 336fff921ce25994fbdc9327a43d8a02,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: ResetTopScore
+      objectReference: {fileID: 0}
+    - target: {fileID: 4703882758386518616, guid: 336fff921ce25994fbdc9327a43d8a02,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4703882758386518616, guid: 336fff921ce25994fbdc9327a43d8a02,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4703882758386518616, guid: 336fff921ce25994fbdc9327a43d8a02,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4703882758386518622, guid: 336fff921ce25994fbdc9327a43d8a02,
         type: 3}
@@ -2553,6 +2606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 835623a27d2bbf8498a98a93c7a3de7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonSound: {fileID: 11400000, guid: 101c6a3f7a06c074680089398fd3d37f, type: 2}
   textBestScore: {fileID: 688112874}
   optionsPanel: {fileID: 1864317519}
   creditsPanel: {fileID: 471096331}

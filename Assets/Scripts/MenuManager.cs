@@ -8,6 +8,7 @@
  */
 
 using UnityEngine;
+using System.Collections;
 
 /**
  * Script that controls the transition between the scenes
@@ -15,17 +16,45 @@ using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
+    // Reference to the button sound
+    public Sound buttonSound;
+
+    // Change the scene
+    private IEnumerator ChangeSceneAfterButtonSoundCoRoutine(string sceneToLoad)
+    {
+        // Wait until the sound has finished and change the scene
+        yield return new WaitForSeconds(buttonSound.clip.length);
+        ChangeScene(sceneToLoad);
+    }
+
+    // Close the application
+    private IEnumerator QuitApplicationAfterButtonSoundCoRoutine()
+    {
+        // Wait until the sound has finished and change the scene
+        yield return new WaitForSeconds(buttonSound.clip.length);
+        Application.Quit();
+    }
+
+    // Changes of scene when a button is pressed
+    public void ChangeSceneAfterButtonSound(string sceneToLoad)
+    {
+        // Reproduce the sound and change the scene after it has finished
+        AudioManager.Instance.PlaySound(buttonSound, false);
+        StartCoroutine(ChangeSceneAfterButtonSoundCoRoutine(sceneToLoad));
+    }
+
+    // Close the application when the button is pressed
+    public void QuitApplicationAfterButtonSound()
+    {
+        // Reproduce the sound and change and close the application
+        AudioManager.Instance.PlaySound(buttonSound, false);
+        StartCoroutine(QuitApplicationAfterButtonSoundCoRoutine());
+    }
+
     // Change the scene to a new one
     public void ChangeScene(string sceneToLoad)
     {
         // Change the current scene
         GameSceneManager.Instance.ChangeScene(sceneToLoad);
-    }
-
-    // Quit the application
-    public void Quit()
-    {
-        // Quit
-        Application.Quit(); 
     }
 }

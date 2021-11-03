@@ -44,7 +44,7 @@ public class Helix : MonoBehaviour
     private List<GameObject> deathParts = new List<GameObject>();
 
     // List with all the spawned helix intermediate platforms
-    public List<GameObject> spawnedLevels = new List<GameObject>();
+    public List<GameObject> spawnedHelixPlatforms = new List<GameObject>();
 
     // Reference to the helix top platform
     public Transform helixTopTransform;
@@ -144,10 +144,10 @@ public class Helix : MonoBehaviour
     private void ClearHelixPlatforms()
     {
         // Check if there are helix platforms created
-        if (spawnedLevels.Count > 0)
+        if (spawnedHelixPlatforms.Count > 0)
         {
             // Loop to clear the helix platforms
-            foreach (GameObject go in spawnedLevels)
+            foreach (GameObject go in spawnedHelixPlatforms)
             {
                 // Clear the helix platform
                 Destroy(go);
@@ -243,7 +243,7 @@ public class Helix : MonoBehaviour
             // Create the plaform and assign its position
             GameObject level = Instantiate(helixLevelPrefab, transform);
             level.transform.localPosition = new Vector3(0, spawnPosY, 0);
-            spawnedLevels.Add(level);
+            spawnedHelixPlatforms.Add(level);
 
             // Set the not disabled parts of the helix platform
             SetHelixPlatformNotDisabledParts(level, i);
