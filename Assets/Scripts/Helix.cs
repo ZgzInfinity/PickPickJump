@@ -82,7 +82,7 @@ public class Helix : MonoBehaviour
     private void Update()
     {
         // Check if the screen has been touched
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && !ball.GetInGameOver())
         {
             // Get the tap position
             Vector2 mouseTapPosition = Input.mousePosition;

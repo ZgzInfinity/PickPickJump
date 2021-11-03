@@ -102,6 +102,12 @@ public class AudioManager : MonoBehaviour
             // Get the status
             GetSoundtrackStatus();
         }
+        else
+        {
+            // Set the time to zero to start the soundtrack from the beginning
+            musicAudioSource.time = 0f;
+        }
+
         // Play the soundtrack
         musicAudioSource.Play();
     }
@@ -152,6 +158,9 @@ public class AudioManager : MonoBehaviour
         // Check if the soundtrack can be changed by the player
         if (!soundtrackChanged)
         {
+            // Stop the current soundtrack
+            StopSound(soundtracks[currentSoundtrack], false);
+
             // Change the soundtrack to the next one
             soundtrackChanged = true;
             currentSoundtrack = (currentSoundtrack < soundtracks.Count - 1) ? currentSoundtrack + 1 : 0;

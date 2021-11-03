@@ -33,6 +33,9 @@ public class GameLevelManager : MonoBehaviour
     // Reference to the ball
     public Ball ball;
 
+    // Reference to button sound
+    public Sound buttonSound;
+
     // Awake is called one time when the scene is loaded
     private void Awake()
     { 
@@ -49,6 +52,35 @@ public class GameLevelManager : MonoBehaviour
 
         // Set the score to zero
         UiManager.Instance.ResetScore();
+    }
+
+    // Update is called once per frame
+    private void Update()
+    {
+        // Check if the level has been completed
+        if (levelCompleted)
+        {
+            // Check if the screen has been touched
+            if (Input.GetMouseButton(0))
+            {
+                // Reproduce button sound
+                AudioManager.Instance.PlaySound(buttonSound, false);
+
+                // Check if there is next level
+                bool nextLevel = IncrementLevel();
+                if (nextLevel)
+                {
+                    // Reset the ball and loads the next level
+                    ball.Reset();
+                    LoadLevel();
+                }
+                else
+                {
+                    // Change the scene to the main menu one
+                    GameSceneManager.Instance.ChangeScene(GameScenes.Intro);
+                }
+            }
+        }
     }
 
     // Get the current level
@@ -81,38 +113,12 @@ public class GameLevelManager : MonoBehaviour
     public bool IncrementLevel()
     {
         // Check if all the levels have been passed
-        bool nextLevel = (currentLevel < helix.GetNumLevels()) ? true : false;
+        bool nextLevel = (currentLevel < helix.GetNumLevels() - 1) ? true : false;
 
         // Increment the level because there are levels to complete
         if (nextLevel){
             currentLevel++;
         }
         return nextLevel;
-    }
-
-    // Update is called once per frame
-    public void Update()
-    {
-        // Check if the level has been completed
-        if (levelCompleted)
-        {
-            // Check if the screen has been touched
-            if (Input.GetMouseButton(0))
-            {
-                // Check if there is next level
-                bool nextLevel = IncrementLevel();
-                if (nextLevel)
-                {
-                    // Reset the ball and loads the next level
-                    ball.Reset();
-                    LoadLevel();
-                }
-                else
-                {
-                    // Change the scene to the main menu one
-                    GameSceneManager.Instance.ChangeScene(GameScenes.Intro);
-                }
-            }
-        }
     }
 }

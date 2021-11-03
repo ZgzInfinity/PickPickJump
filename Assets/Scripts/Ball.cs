@@ -187,12 +187,12 @@ public class Ball : MonoBehaviour
         if (perfectParts == 0)
         {
             // Add a score of five
-            UiManager.Instance.UpdateScore(5);
+            UiManager.Instance.UpdateScore(2);
         }
         else
         {
             // Add a score of five
-            UiManager.Instance.UpdateScore(perfectParts * 5);
+            UiManager.Instance.UpdateScore(perfectParts * 2);
         }
 
         // Increment the number of parts covered

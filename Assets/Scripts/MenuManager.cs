@@ -35,6 +35,14 @@ public class MenuManager : MonoBehaviour
         Application.Quit();
     }
 
+    // Load level
+    private IEnumerator LoadLevelAfterButtonSoundCoroutine()
+    {
+        // Wait until the sound has finished and load level
+        yield return new WaitForSeconds(buttonSound.clip.length);
+        GameLevelManager.Instance.LoadLevel();
+    }
+
     // Changes of scene when a button is pressed
     public void ChangeSceneAfterButtonSound(string sceneToLoad)
     {
@@ -49,6 +57,15 @@ public class MenuManager : MonoBehaviour
         // Reproduce the sound and change and close the application
         AudioManager.Instance.PlaySound(buttonSound, false);
         StartCoroutine(QuitApplicationAfterButtonSoundCoRoutine());
+    }
+
+
+    // Load level when the button is pressed
+    public void LoadLevelAfterButtonSound()
+    {
+        // Reproduce the sound and load the level
+        AudioManager.Instance.PlaySound(buttonSound, false);
+        StartCoroutine(LoadLevelAfterButtonSoundCoroutine());
     }
 
     // Change the scene to a new one
