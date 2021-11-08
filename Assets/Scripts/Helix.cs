@@ -16,6 +16,9 @@ using System.Collections.Generic;
 
 public class Helix : MonoBehaviour
 {
+    // Force to rotate the helix structure
+    private float rotationForce = 500f;
+
     // Distance of the level to be travelled by the ball
     private float levelDistance;
 
@@ -27,9 +30,6 @@ public class Helix : MonoBehaviour
 
     // Starting position of the helix structure
     private Vector3 startRotation;
-
-    // Last position of the helix structure
-    private Vector2 lastPosition;
 
     // Stage to be played
     private Stage stage;
@@ -70,6 +70,12 @@ public class Helix : MonoBehaviour
     // Reference to the music button
     public RectTransform musicButton;
 
+    // Reference to the helix start platform
+    public GameObject helixStartPlatform;
+
+    // Reference to the helix start platform
+    public GameObject helixGoalPlatform;
+
     // Awake is called one time when the scene is loaded
     private void Awake()
     {
@@ -98,10 +104,8 @@ public class Helix : MonoBehaviour
             }
             else
             {
-                // Calculate the distance to rotate the helix cylinder
-                float distance = (lastPosition.x - mouseTapPosition.x);
-                lastPosition = mouseTapPosition;
-                transform.Rotate(Vector3.up * distance);
+                float mouseX = Input.GetAxisRaw("Mouse X");
+                transform.Rotate(0, -mouseX * rotationForce * Time.deltaTime, 0);
             }
         }
         // Calculate the progress of the ball in the level
@@ -121,6 +125,17 @@ public class Helix : MonoBehaviour
         UiManager.Instance.LevelNotGameOver();
     }
 
+    // Set the color of the start and goal helix platforms
+    private void SetStartGoalColorPlatforms(GameObject helixPlatform)
+    {
+        // Loop that iterates of the parts of the platform
+        foreach (Transform child in helixPlatform.transform)
+        {
+            // Change the color of the platform
+            child.gameObject.GetComponent<Renderer>().material.color = stage.stageLevelPartNotDeathColor;
+        }
+    }
+
     // Set the configuration of the stage
     private void SetStageConf(int stageNumber)
     {
@@ -138,6 +153,13 @@ public class Helix : MonoBehaviour
 
         // Set the initial rotation
         startRotation = transform.localEulerAngles;
+
+        // Set the color of the helix start platform
+        SetStartGoalColorPlatforms(helixStartPlatform);
+
+        // Set the color of the helix goal platform
+        SetStartGoalColorPlatforms(helixGoalPlatform);
+
     }
 
     // Clear the helix platforms of the cylinder

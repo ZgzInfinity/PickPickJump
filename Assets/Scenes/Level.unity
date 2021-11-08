@@ -757,6 +757,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MenuManager
       objectReference: {fileID: 0}
+    - target: {fileID: 2558120818706684226, guid: 3ed3aecc1dc07e44f8be36ac6f674a59,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ed3aecc1dc07e44f8be36ac6f674a59, type: 3}
 --- !u!114 &399323863 stripped
@@ -970,6 +975,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9f3a267d60552a438baeceb72dc0ef3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &600085968 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3844687615414655075, guid: 3536ad374ce98c243a9a9ec14aa30667,
+    type: 3}
+  m_PrefabInstance: {fileID: 1877485967}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &641084303
 GameObject:
   m_ObjectHideFlags: 0
@@ -3436,6 +3447,8 @@ MonoBehaviour:
   ball: {fileID: 1227433282}
   currentLevel: 0
   musicButton: {fileID: 1861829084}
+  helixStartPlatform: {fileID: 1941039857}
+  helixGoalPlatform: {fileID: 600085968}
 --- !u!1 &1861829083
 GameObject:
   m_ObjectHideFlags: 0
@@ -3923,6 +3936,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1941039857 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3844687615414655075, guid: 3536ad374ce98c243a9a9ec14aa30667,
+    type: 3}
+  m_PrefabInstance: {fileID: 3844687616247939199}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1945049117 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3844687615414655074, guid: 3536ad374ce98c243a9a9ec14aa30667,
@@ -4014,6 +4033,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2924757515626848345, guid: f762a4539cb520441b55ea9fe674ec48,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2924757515626848347, guid: f762a4539cb520441b55ea9fe674ec48,
         type: 3}
