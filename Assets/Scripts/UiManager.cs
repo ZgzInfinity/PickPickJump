@@ -3,7 +3,7 @@
  * ----------------------------------------
  * -- Project: Pick-Pick Jump -------------
  * -- Author: Rubén Rodríguez Estebban ----
- * -- Date: 31/10/2021 --------------------
+ * -- Date: 11/11/2021 --------------------
  * ----------------------------------------
  */
 
@@ -57,6 +57,18 @@ public class UiManager : MonoBehaviour
     // Reference to the game over panel
     public RectTransform levelGameOverPanel;
 
+    // Reference to the game completed panel
+    public RectTransform gameCompletedPanel;
+
+    // Reference to the level status panel
+    public RectTransform levelStatusPanel;
+
+    // Reference to the options level panel
+    public RectTransform optionsPanel;
+
+    // Reference to the fireworks
+    public GameObject fireworks;
+
     // Awake is called one time when the scene is loaded
     private void Awake()
     {
@@ -90,11 +102,18 @@ public class UiManager : MonoBehaviour
         score = 0;
         textScore.text = score.ToString();
 
-        // Get the current level where the player plays
-        int level = GameLevelManager.Instance.GetCurrentLevel();
-
         // Set the score to zero and assign it to the best score text indicator
         textBestScore.text = PlayerPrefs.GetInt("TopScore").ToString();
+
+        // Set the level to play
+        SetLevel();
+    }
+
+    // Set the level and next level indicators
+    public void SetLevel()
+    {
+        // Get the current level where the player plays
+        int level = GameLevelManager.Instance.GetCurrentLevel();
 
         // Update the current and next level indicators
         currentLevel.text = (level + 1).ToString();
@@ -113,6 +132,28 @@ public class UiManager : MonoBehaviour
     {
         // Hide the panel
         levelCompletedPanel.gameObject.SetActive(false);
+    }
+
+    // Display the game completed panel
+    public void GameCompleted()
+    {
+        // Display the panel
+        gameCompletedPanel.gameObject.SetActive(true);
+
+        levelStatusPanel.gameObject.SetActive(false);
+
+        optionsPanel.gameObject.SetActive(false);
+
+        // Display the fireworks
+        fireworks.SetActive(true);
+    }
+
+
+    // Hide the game completed panel
+    public void GameUnCompleted()
+    {
+        // Hide the panel
+        gameCompletedPanel.gameObject.SetActive(false);
     }
 
     // Display the game over panel

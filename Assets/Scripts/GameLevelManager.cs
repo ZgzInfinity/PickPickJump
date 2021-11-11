@@ -3,7 +3,7 @@
  * ----------------------------------------
  * -- Project: Pick-Pick Jump -------------
  * -- Author: Rubén Rodríguez Estebban ----
- * -- Date: 31/10/2021 --------------------
+ * -- Date: 11/11/2021 --------------------
  * ----------------------------------------
  */
 
@@ -21,6 +21,9 @@ public class GameLevelManager : MonoBehaviour
     // Controls if a level has been completed
     private bool levelCompleted;
 
+    // Controls if the game has been completed
+    private bool gameCompleted;
+
     // Current level to be played
     private int currentLevel;
 
@@ -36,6 +39,12 @@ public class GameLevelManager : MonoBehaviour
     // Reference to button sound
     public Sound buttonSound;
 
+    // Reference to game completed sound
+    public Sound gameFinished;
+
+    // Reference to the camera
+    public Camera cameraLevel;
+
     // Awake is called one time when the scene is loaded
     private void Awake()
     { 
@@ -47,39 +56,87 @@ public class GameLevelManager : MonoBehaviour
     private void Start()
     {
         // Set the initial level and loads it
-        currentLevel = 0;
+        currentLevel = PlayerPrefs.GetInt("Level");
+
+        gameCompleted = false;
         LoadLevel();
 
         // Set the score to zero
         UiManager.Instance.ResetScore();
+
+        // Set the game panel as incompleted
+        UiManager.Instance.GameUnCompleted();
+    }
+
+
+    // Restart the game
+    private IEnumerator RestartGameAfterGameCompletedSoundCoroutine()
+    {
+        // Wait until the sound has finished and restart the game
+        yield return new WaitForSeconds(gameFinished.clip.length * 2);
+        GameSceneManager.Instance.ChangeScene(GameScenes.Intro);
+    }
+
+    // Restart the game
+    private IEnumerator LoadNextLevelAfterOneSecondCoroutine()
+    {
+        // Wait until the sound has finished and restart the game
+        yield return new WaitForSeconds(1f);
+
+        // Reset the ball and loads the next level
+        ball.Reset();
+        LoadLevel();
+    }
+
+    // Load next level after button sound finish
+    private void LoadNextLevelAfterOneSeconds()
+    {
+        // Coroutine that load next level after the button sound has finished
+        StartCoroutine(LoadNextLevelAfterOneSecondCoroutine());
+    }
+
+    // Load level
+    private void RestartGameAfterGameCompletedSound()
+    {
+        StartCoroutine(RestartGameAfterGameCompletedSoundCoroutine());
     }
 
     // Update is called once per frame
     private void Update()
     {
         // Check if the level has been completed
-        if (levelCompleted)
+        if (gameCompleted)
         {
-            // Check if the screen has been touched
-            if (Input.GetMouseButton(0))
-            {
-                // Reproduce button sound
-                AudioManager.Instance.PlaySound(buttonSound, false);
+            // Establish camera background as black
+            cameraLevel.backgroundColor = Color.black;
 
-                // Check if there is next level
-                bool nextLevel = IncrementLevel();
-                if (nextLevel)
-                {
-                    // Reset the ball and loads the next level
-                    ball.Reset();
-                    LoadLevel();
-                }
-                else
-                {
-                    // Change the scene to the main menu one
-                    GameSceneManager.Instance.ChangeScene(GameScenes.Intro);
-                }
+            // Hide the helix and the ball
+            helix.gameObject.SetActive(false);
+
+            // Destroy the parent of the ball
+            cameraLevel.transform.parent = null;
+
+            // Hide the ball and the ball
+            ball.gameObject.SetActive(false);
+
+            // Store the new level to play
+            PlayerPrefs.SetInt("Level", 0);
+
+            // Change the scene to the main menu one
+            RestartGameAfterGameCompletedSound();
+        }
+        else if (levelCompleted)
+        {
+            // Check if there is next level
+            bool nextLevel = IncrementLevel();
+            if (nextLevel)
+            {
+                // Load the next level
+                LoadNextLevelAfterOneSeconds();
             }
+
+            // Only loads the level one time
+            levelCompleted = false;
         }
     }
 
@@ -95,6 +152,14 @@ public class GameLevelManager : MonoBehaviour
         levelCompleted = completed;
     }
 
+
+    // Set the game as completed
+    public void SetGameCompleted(bool completed)
+    {
+        gameCompleted = completed;
+    }
+
+
     // Load the current level
     public void LoadLevel()
     {
@@ -103,6 +168,11 @@ public class GameLevelManager : MonoBehaviour
         {
             // Set the score to zero
             UiManager.Instance.ResetScore();
+        }
+        else
+        {
+            // Set the level to play
+            UiManager.Instance.SetLevel();
         }
 
         // Load the level
@@ -117,7 +187,12 @@ public class GameLevelManager : MonoBehaviour
 
         // Increment the level because there are levels to complete
         if (nextLevel){
+
+            // Increment the level
             currentLevel++;
+
+            // Store the new level to play
+            PlayerPrefs.SetInt("Level", currentLevel);
         }
         return nextLevel;
     }

@@ -3,7 +3,7 @@
  * ----------------------------------------
  * -- Project: Pick-Pick Jump -------------
  * -- Author: Rubén Rodríguez Estebban ----
- * -- Date: 31/10/2021 --------------------
+ * -- Date: 11/11/2021 --------------------
  * ----------------------------------------
  */
 
@@ -17,7 +17,7 @@ using System.Collections.Generic;
 public class Helix : MonoBehaviour
 {
     // Force to rotate the helix structure
-    private float rotationForce = 500f;
+    private float rotationForce = 20f;
 
     // Distance of the level to be travelled by the ball
     private float levelDistance;
@@ -64,6 +64,9 @@ public class Helix : MonoBehaviour
     // Reference to the ball
     public Ball ball;
 
+    // Reference to the ball
+    public CharacterSelector characterSelector;
+
     // Current level
     public int currentLevel;
 
@@ -87,27 +90,21 @@ public class Helix : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        // Check if the screen has been touched
-        if (Input.GetMouseButton(0) && !ball.GetInGameOver())
+
+        if (Input.touchCount > 0 && !ball.GetInGameOver())
         {
-            // Get the tap position
-            Vector2 mouseTapPosition = Input.mousePosition;
+            // GET TOUCH 0
+            Touch touch0 = Input.GetTouch(0);
 
-            // Get the tap position in terms of the music button position
-            Vector2 localMousePosition = musicButton.InverseTransformPoint(mouseTapPosition);
+            // APPLY ROTATION
+            if (touch0.phase == TouchPhase.Moved)
+            {
+                Quaternion rotationY = Quaternion.Euler(0f, -touch0.deltaPosition.x * rotationForce * Time.deltaTime, 0f);
+                transform.rotation *= rotationY;
+            }
 
-            // Check if the music button has been touched
-            if (musicButton.rect.Contains(localMousePosition))
-            {
-                // Change the current soundtrack played
-                AudioManager.Instance.ChangeCurrentSoundtrack();
-            }
-            else
-            {
-                float mouseX = Input.GetAxisRaw("Mouse X");
-                transform.Rotate(0, -mouseX * rotationForce * Time.deltaTime, 0);
-            }
         }
+
         // Calculate the progress of the ball in the level
         UiManager.Instance.ChangeSliderLevelAndProgress();
     }
@@ -148,9 +145,12 @@ public class Helix : MonoBehaviour
         // Set the color of the helix structure of the level
         gameObject.GetComponent<Renderer>().material.color = stage.stageHelixCylinder;
 
-        // Set the color of the ball
-        ball.GetComponent<Renderer>().material.color = stage.stageBallColor;
+        // Get the index character selector of the ball
+        int indexCharacterSelector = characterSelector.GetIndexCharacterSelector();
 
+        characterSelector.transform.GetChild(0).gameObject.
+            GetComponent<Renderer>().material.color = stage.stageBallColor;
+ 
         // Set the initial rotation
         startRotation = transform.localEulerAngles;
 
@@ -300,11 +300,15 @@ public class Helix : MonoBehaviour
         // Spawn the helix platforms of the level
         SpawnHelixPlatforms();
 
+        // Set the game as not completed
+        GameLevelManager.Instance.SetGameCompleted(false);
+
         // Set the level as not completed
         GameLevelManager.Instance.SetLevelCompleted(false);
 
-
-        AudioManager.Instance.PlaySound(AudioManager.Instance.soundtracks[AudioManager.Instance.currentSoundtrack], true);
+        // Reproduce the current soundtrack
+        Sound soundtrack = AudioManager.Instance.GetCurrentSoundtrack();
+        AudioManager.Instance.PlaySound(soundtrack, true);
     }
 
     // Load the current level

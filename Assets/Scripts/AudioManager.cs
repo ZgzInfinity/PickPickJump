@@ -3,13 +3,15 @@
  * ----------------------------------------
  * -- Project: Pick-Pick Jump -------------
  * -- Author: Rubén Rodríguez Estebban ----
- * -- Date: 31/10/2021 --------------------
+ * -- Date: 11/11/2021 --------------------
  * ----------------------------------------
  */
 
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
+
 
 /**
  * Script that controls the reproduction of the sounds
@@ -34,6 +36,9 @@ public class AudioManager : MonoBehaviour
 
     // List with the soundtracks played during the level
     public List<Sound> soundtracks = new List<Sound>();
+
+    // Reference to the music button
+    public Image musicButton;
 
     // Awake is called one time when the scene is loaded
     private void Awake()
@@ -74,6 +79,8 @@ public class AudioManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         // Make the changing soundtrack option available
         soundtrackChanged = false;
+        // Change the icon of the music button
+        musicButton.GetComponent<ButtonMusicImageManager>().ChangeMusicButtonImage();
     }
 
     // Play effect
@@ -147,6 +154,7 @@ public class AudioManager : MonoBehaviour
         musicAudioSource.time = PlayerPrefs.GetFloat("MusicTime");
     }
 
+    // Get the current soundtrack 
     public Sound GetCurrentSoundtrack()
     {
         return soundtracks[currentSoundtrack];
@@ -163,6 +171,7 @@ public class AudioManager : MonoBehaviour
 
             // Change the soundtrack to the next one
             soundtrackChanged = true;
+            musicButton.GetComponent<ButtonMusicImageManager>().ChangeMusicButtonImage();
             currentSoundtrack = (currentSoundtrack < soundtracks.Count - 1) ? currentSoundtrack + 1 : 0;
 
             // Play the soundtrack from the beginning because it's a new one

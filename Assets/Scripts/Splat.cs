@@ -3,7 +3,7 @@
  * ----------------------------------------
  * -- Project: Pick-Pick Jump -------------
  * -- Author: Rubén Rodríguez Estebban ----
- * -- Date: 31/10/2021 --------------------
+ * -- Date: 11/11/2021 --------------------
  * ----------------------------------------
  */
 
@@ -30,6 +30,9 @@ public class Splat : MonoBehaviour
     // Reference to the ball
     public Ball ball;
 
+    // Reference to the ball
+    public CharacterSelector characterSelector;
+
     // Awake is called one time when the scene is loaded
     void Awake()
     {
@@ -49,7 +52,37 @@ public class Splat : MonoBehaviour
     {
         // Wait an a half second and set the color of the splat with the color of the ball
         yield return new WaitForSeconds(0.1f);
-        splatPrefab.GetComponent<SpriteRenderer>().color = ball.GetComponent<Renderer>().material.color;
+
+        // Set the color of the splat
+        SetColor();
+    }
+
+    // Set the color of the splat
+    private void SetColor()
+    {
+        // Get the index of the character selector texture
+        int indexCharacterSelector = characterSelector.GetIndexCharacterSelector();
+
+        switch (indexCharacterSelector)
+        {
+            case 0:
+                // Set the splat with the color material of the ball
+                splatPrefab.GetComponent<SpriteRenderer>().color = characterSelector.transform.GetChild(0).gameObject.
+                    GetComponent<Renderer>().material.color;
+                break;
+            case 1:
+                // Set the color of splat with the emoji color
+                splatPrefab.GetComponent<SpriteRenderer>().color = new Color(0.95f, 0.85f, 0.14f);
+                break;
+            case 2:
+                // Set the color of the splat with the ninja color
+                splatPrefab.GetComponent<SpriteRenderer>().color = new Color(0.95f, 0.54f, 0.14f);
+                break;
+            case 3:
+                // Set the color of the splat with the soccer color
+                splatPrefab.GetComponent<SpriteRenderer>().color = new Color(0.97f, 0.27f, 0.26f);
+                break;
+        }
     }
 
     // Draw the splat when the ball collides with the helix platform

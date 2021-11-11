@@ -3,7 +3,7 @@
  * ----------------------------------------
  * -- Project: Pick-Pick Jump -------------
  * -- Author: Rubén Rodríguez Estebban ----
- * -- Date: 31/10/2021 --------------------
+ * -- Date: 11/11/2021 --------------------
  * ----------------------------------------
  */
 
@@ -55,6 +55,12 @@ public class Ball : MonoBehaviour
 
     // Reference to the victory sound
     public Sound victory;
+
+    // Reference to the game completed sound
+    public Sound gameCompleted;
+
+    // Reference to the whoosh sound
+    public Sound whoosh;
 
     // Awake is called one time when the scene is loaded
     private void Awake()
@@ -165,17 +171,36 @@ public class Ball : MonoBehaviour
             }
             else
             {
-                // Reproduce the sound of victory
-                AudioManager.Instance.PlaySound(victory, false);
-
                 // Ball collides with goal helix platform
                 Splat.Instance.MakeSplat(collision.gameObject);
-                UiManager.Instance.LevelCompleted();
-                GameLevelManager.Instance.SetLevelCompleted(true);
 
-                // Get the current soundtrack storing its duration
-                Sound currentSoundtrack = AudioManager.Instance.GetCurrentSoundtrack();
-                AudioManager.Instance.StopSound(currentSoundtrack, true);
+                // Get the current level completed
+                int currentLevel = GameLevelManager.Instance.GetCurrentLevel();
+
+                if (currentLevel == helix.GetNumLevels() - 1)
+                {
+                    // Reproduce the sound of victory
+                    AudioManager.Instance.PlaySound(gameCompleted, false);
+
+                    UiManager.Instance.GameCompleted();
+                    GameLevelManager.Instance.SetGameCompleted(true);
+
+                    // Get the current soundtrack storing its duration
+                    Sound currentSoundtrack = AudioManager.Instance.GetCurrentSoundtrack();
+                    AudioManager.Instance.StopSound(currentSoundtrack, false);
+                }
+                else
+                {
+                    // Reproduce the sound of victory
+                    AudioManager.Instance.PlaySound(victory, false);
+
+                    UiManager.Instance.LevelCompleted();
+                    GameLevelManager.Instance.SetLevelCompleted(true);
+
+                    // Get the current soundtrack storing its duration
+                    Sound currentSoundtrack = AudioManager.Instance.GetCurrentSoundtrack();
+                    AudioManager.Instance.StopSound(currentSoundtrack, true);
+                }
             }
         }
     }
@@ -183,6 +208,9 @@ public class Ball : MonoBehaviour
     // Sent when another object enters a trigger collider attached to this object 
     private void OnTriggerEnter(Collider other)
     {
+        // Reproduce whoosh sound
+        AudioManager.Instance.PlaySound(whoosh, false);
+
         // Check the number of platforms without collide
         if (perfectParts == 0)
         {

@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSound: {fileID: 11400000, guid: 101c6a3f7a06c074680089398fd3d37f, type: 2}
+  buttons: []
 --- !u!4 &358223923
 Transform:
   m_ObjectHideFlags: 0
@@ -1559,7 +1560,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Art\r\nHelixModel by LuisCanary\n\r\nFont \r\nReliax\r by Raymond Larabie\nhttps://www.1001fonts.com\n\nSoundtracks\nAgua\nMachinist\nContact\nNewDisc\nTechnician\nall
+  m_text: "Art\r \nHelixModel by LuisCanary\nBall textures by GDTitans\n\nFont\nReliax
+    by Raymond Larabie\nhttps://www.1001fonts.com\n\nSoundtracks\nAgua\nMachinist\nContact\nNewDisc\nTechnician\nAll
     composed by Maikas\n \nFx Sounds\r\n www.freesound.org"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7510f30edf9f9ef448ba711b34ce6f2d, type: 2}
@@ -1594,7 +1596,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
