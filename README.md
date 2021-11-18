@@ -12,7 +12,7 @@
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) 
 [![Version](https://img.shields.io/badge/Version%20-1.0-0fd5f9.svg)](https://github.com/ZgzInfinity/OutRun/releases)
-![made-with-Unity](https://img.shields.io/badge/Made%20with-C++-600ff9.svg)
+![made-with-Unity](https://img.shields.io/badge/Made%20with-Unity-600ff9.svg)
 
 ![GitHub All Releases](https://img.shields.io/github/downloads/ZgzInfinity/PickPickJump/total?color=%20%23f34605&label=Release%20downloads&logoColor=%20)
 [![Github Stars](https://img.shields.io/github/stars/ZgzInfinity/PickPickJump?logo=github)](https://github.com/ZgzInfinity/PickPickJump/stargazers)
